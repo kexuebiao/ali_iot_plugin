@@ -162,7 +162,7 @@ class DispatchNetAPI {
     AliIotPlugin.methodChannel.invokeMethod('stopDiscovery');
   }
 
-  static listenGatewayPermit(callback(Map data)) async {
+  static listenGatewayPermit(callback(Map<String,dynamic> data)) async {
     if (AliIotPlugin.debug) {
       print("$TAG : listenGatewayPermit");
     }
