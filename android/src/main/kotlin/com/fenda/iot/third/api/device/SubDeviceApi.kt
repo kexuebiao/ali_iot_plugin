@@ -1,5 +1,6 @@
 package com.fenda.iot.third.api.device
 
+import android.view.View
 import com.aliyun.alink.linksdk.channel.core.base.AError
 import com.aliyun.alink.linksdk.channel.mobile.api.IMobileDownstreamListener
 import com.aliyun.alink.linksdk.channel.mobile.api.IMobileSubscrbieListener
@@ -12,9 +13,6 @@ import io.flutter.plugin.common.EventChannel
  * For android
  */
 object SubDeviceApi {
-
-
-    private const val TOPIC_PATH = "/thing/topo/add/status"
     private var events: EventChannel.EventSink? = null
 
     private val mTopicListener: IMobileSubscrbieListener = object : IMobileSubscrbieListener {
@@ -34,38 +32,31 @@ object SubDeviceApi {
     private val mDownStreamListener: IMobileDownstreamListener = object : IMobileDownstreamListener {
         override fun onCommand(method: String, data: String) {
             log("SubDeviceApi", "接收到Topic = $method, data=$data")
-            if (method == TOPIC_PATH) {
+            if (events != null) {
                 events?.success(data)
-                if (events == null) {
-                    log("SubDeviceApi", "接收到Topic = $method, 但因为events为null所以发送失败")
-                }
+            } else {
+                log("SubDeviceApi", "接收到Topic = $method, 但因为events为null所以发送失败")
             }
         }
 
         override fun shouldHandle(method: String): Boolean {
-            return TOPIC_PATH.equals(method, ignoreCase = true)
+            return true;
         }
     }
     private var maybeRegister = false
 
     fun registerListener(events: EventChannel.EventSink?) {
-        this.events = events;
+        this.events = events
         if (maybeRegister) {
             return
         }
         maybeRegister = true
-        MobileChannel.getInstance().subscrbie(TOPIC_PATH, mTopicListener)
-        log("SubDeviceApi", "subscribe $TOPIC_PATH")
         MobileChannel.getInstance().registerDownstreamListener(true, mDownStreamListener)
-        log("SubDeviceApi", "register $TOPIC_PATH")
 
     }
 
     fun unRegisterListener() {
-        MobileChannel.getInstance().unSubscrbie(TOPIC_PATH, mTopicListener)
-        log("SubDeviceApi", "unSubscribe $TOPIC_PATH")
         MobileChannel.getInstance().unRegisterDownstreamListener(mDownStreamListener)
-        log("SubDeviceApi", "unRegister $TOPIC_PATH")
         events = null
         maybeRegister = false
     }

@@ -172,6 +172,10 @@ class DispatchNetAPI {
         var data = jsonDecode(event);
         callback(data);
       }
+    },onError: (e){
+      print("======================= Error =========================");
+    },onDone: (){
+      print("======================= Done =========================");
     });
     // AliIotPlugin.methodChannel.invokeMethod('listenGatewayPermit');
   }
@@ -356,8 +360,8 @@ class DevicePanelAPI {
     _devicePanelEventSubscription = AliIotPlugin.eventChannel.receiveBroadcastStream("subDevicePanelEvent").listen((event) {
       if (event != null) {
         print("$TAG : listenDevicePanelEvent event: " + event.toString());
-        var data = jsonDecode(event);
-        callback(data);
+        // var data = jsonDecode(event);
+        // callback(data);
       }
     });
   }
