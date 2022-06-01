@@ -19,6 +19,7 @@ import io.flutter.plugin.common.*
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import android.util.Log
 
 
 /** AliIotPlugin */
@@ -27,6 +28,7 @@ public class AliIotPlugin : FlutterPlugin, MethodCallHandler, BasicMessageChanne
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
+    private  var TAG: String = "AliIotPlugin"
     private lateinit var eventChannel: EventChannel
     private lateinit var methodChannel: MethodChannel
     private lateinit var basicMessageChannel: BasicMessageChannel<Any>
@@ -62,6 +64,7 @@ public class AliIotPlugin : FlutterPlugin, MethodCallHandler, BasicMessageChanne
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        Log.e(TAG, "onMethodCall: " + call.method)
         when (call.method) {
             "setDebug" -> {
                 DEBUG = call.argument<Boolean>("debug") ?: true
@@ -80,7 +83,8 @@ public class AliIotPlugin : FlutterPlugin, MethodCallHandler, BasicMessageChanne
                         result.success(json)
                     }, { exception ->
                         log("onMethodCall requestApi exception-> $exception")
-                        result.error(exception?.localizedMessage ?: "", exception?.message ?: "", exception.toString())
+                        result.error(exception?.localizedMessage ?: "", exception?.message
+                                ?: "", exception.toString())
                     })
                 }
             }
@@ -88,10 +92,14 @@ public class AliIotPlugin : FlutterPlugin, MethodCallHandler, BasicMessageChanne
                 result.success(LoginBusiness.isLogin())
             }
             "authCodeLogin" -> {
+                log("authCodeLogin", "--- start ---")
                 val authCode = call.arguments?.tranJson()?.getString("authCode")
+                log("authCodeLogin", "--- start --- $authCode")
                 if (authCode != null) {
+                    log("authCodeLogin", "--- start --- authCode != null")
                     LoginBusiness.authCodeLogin(authCode, object : ILoginCallback {
                         override fun onLoginSuccess() {
+                            log("authCodeLogin", "success")
                             result.success(true)
                         }
 
@@ -101,6 +109,7 @@ public class AliIotPlugin : FlutterPlugin, MethodCallHandler, BasicMessageChanne
                         }
                     })
                 } else {
+                    log("authCodeLogin", "--- start --- authCode == null")
                     result.error("-1", "authCode is null", null)
                 }
             }

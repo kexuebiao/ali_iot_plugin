@@ -30,15 +30,15 @@ public class SDKInitHelper {
      */
     private static void preInit(AApplication app) {
         //要在OA初始化前调用
-        ConfigManager.getInstance().setGoogleClientId(app.getString(R.string.server_client_id));
+//        ConfigManager.getInstance().setGoogleClientId(app.getString(R.string.server_client_id));
 
-        String appId = app.getString(R.string.facebook_app_id);
-        try {
-            FacebookSdk.setApplicationId(appId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ConfigManager.getInstance().setFacebookId(appId);
+//        String appId = app.getString(R.string.facebook_app_id);
+//        try {
+//            FacebookSdk.setApplicationId(appId);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        ConfigManager.getInstance().setFacebookId(appId);
     }
 
     /**

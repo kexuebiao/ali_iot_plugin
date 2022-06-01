@@ -276,11 +276,11 @@ class DispatchNetAPI {
     AliIotPlugin.methodChannel.invokeMethod('openSystemWiFi');
   }
 
-  static Future<Map?> getDeviceToken() async {
+  static Future<Map?> getDeviceToken(String productKey, String deviceName) async {
     if (AliIotPlugin.debug) {
       print("$TAG : getDeviceToken");
     }
-    var result = await AliIotPlugin.methodChannel.invokeMethod('getDeviceToken');
+    var result = await AliIotPlugin.methodChannel.invokeMethod('getDeviceToken', {"productKey": productKey, "deviceName": deviceName});
     if (result is Map<String, dynamic>) {
       final data = jsonDecode(result["data"]);
       return data;
