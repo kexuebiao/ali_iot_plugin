@@ -14,6 +14,7 @@ import com.fenda.iot.third.utils.log
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 import java.util.*
+import org.json.JSONObject
 
 
 /**
@@ -134,39 +135,39 @@ object DispatchNetAPI {
             override fun onProvisionPrepare(prepareType: Int) {
                 log("startAddDevice", "onProvisionPrepare->", "prepareType:$prepareType")
 
-                AddDeviceBiz.getInstance().toggleProvision("Xiaomi_FF3F", "mtsihao7", 60)
+//                AddDeviceBiz.getInstance().toggleProvision("Xiaomi_FF3F", "mtsihao7", 60)
                 /**
                  * 第三步：配网准备阶段，传入Wi-Fi信息
                  * TODO 修改使用手机当前连接的Wi-Fi的SSID和password
                  */
-//                eventSink.success(listOf("onProvisionPrepare", prepareType))
-//                if (prepareType == 1) {
-//                    methodChannel.invokeMethod("toggleProvision", {}, object : MethodChannel.Result {
-//                        override fun success(result: Any?) {
-//                            log("startAddDevice", "toggleProvision->", "success:$result")
-//                            val arguments = result as? JSONObject
-//                            if (arguments != null) {
-//                                //方法名标识
-//                                val ssid = arguments.optString("ssid")
-//                                val password = arguments.optString("password")
-//                                if (!ssid.isNullOrBlank() && !password.isNullOrBlank()) {
-//                                    AddDeviceBiz.getInstance().toggleProvision(ssid, password, 60)
-//                                } else {
-//                                    log("startAddDevice", "toggleProvision->", "had error ssid=>$ssid password=>$password")
-//                                }
-//                            }
-//                        }
-//
-//                        override fun error(errorCode: String?, errorMessage: String?, errorDetails: Any?) {
-//                            log("startAddDevice", "toggleProvision->", "error:$errorCode errorMessage:$errorMessage errorDetails:$errorDetails")
-//                        }
-//
-//                        override fun notImplemented() {
-//                            log("startAddDevice", "toggleProvision->", "notImplemented")
-//                        }
-//                    });
-//
-//                }
+                eventSink.success(listOf("onProvisionPrepare", prepareType))
+                if (prepareType == 1) {
+                    methodChannel.invokeMethod("toggleProvision", {}, object : MethodChannel.Result {
+                        override fun success(result: Any?) {
+                            log("startAddDevice", "toggleProvision->", "success:$result")
+                            val arguments = result as? JSONObject
+                            if (arguments != null) {
+                                //方法名标识
+                                val ssid = arguments.optString("ssid")
+                                val password = arguments.optString("password")
+                                if (!ssid.isNullOrBlank() && !password.isNullOrBlank()) {
+                                    AddDeviceBiz.getInstance().toggleProvision(ssid, password, 60)
+                                } else {
+                                    log("startAddDevice", "toggleProvision->", "had error ssid=>$ssid password=>$password")
+                                }
+                            }
+                        }
+
+                        override fun error(errorCode: String?, errorMessage: String?, errorDetails: Any?) {
+                            log("startAddDevice", "toggleProvision->", "error:$errorCode errorMessage:$errorMessage errorDetails:$errorDetails")
+                        }
+
+                        override fun notImplemented() {
+                            log("startAddDevice", "toggleProvision->", "notImplemented")
+                        }
+                    });
+
+                }
             }
 
             override fun onProvisioning() {
