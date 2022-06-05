@@ -217,9 +217,11 @@ public class AliIotPlugin : FlutterPlugin, MethodCallHandler, BasicMessageChanne
                 }
             }
             "bindByToken" -> {
+                Log.e(TAG, "---- bindByToken ----")
                 val productKey = call.argument<String>("productKey")
                 val deviceName = call.argument<String>("deviceName")
                 val token = call.argument<String>("token")
+                Log.e(TAG, "---- bindByToken ----$productKey $deviceName $token")
                 if (productKey != null && deviceName != null && token != null) {
                     DispatchNetAPI.bindByToken(productKey, deviceName, token, result)
                 }
