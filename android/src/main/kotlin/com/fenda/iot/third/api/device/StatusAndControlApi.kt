@@ -90,6 +90,7 @@ object StatusAndControlApi {
      * 设置设备属性
      */
     fun setProperties(panelDevice: PanelDevice, paramsStr: String) {
+        ALog.d("TAG", "设置设备属性 = " + paramsStr)
         panelDevice.setProperties(paramsStr, object : IPanelCallback {
             override fun onComplete(bSuc: Boolean, o: Any?) {
                 ALog.d("TAG", "setProps(),request complete," + bSuc)

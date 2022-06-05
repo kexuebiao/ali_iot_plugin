@@ -205,10 +205,15 @@ public class AliIotPlugin : FlutterPlugin, MethodCallHandler, BasicMessageChanne
                 DispatchNetAPI.openSystemWiFi(context, result)
             }
             "getDeviceToken" -> {
+                Log.e(TAG, "getDeviceToken: ---- 1")
                 val productKey = call.argument<String>("productKey")
                 val deviceName = call.argument<String>("deviceName")
+                Log.e(TAG, "getDeviceToken: ---- 2 $productKey $deviceName")
                 if (productKey != null && deviceName != null) {
+                    Log.e(TAG, "getDeviceToken: ---- 3 $productKey $deviceName")
+                    Log.e(TAG, "---- 这个(1) ----")
                     DispatchNetAPI.getDeviceToken(context, productKey, deviceName, result)
+                    Log.e(TAG, "---- 这个(2) ----")
                 }
             }
             "bindByToken" -> {

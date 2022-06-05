@@ -5,6 +5,8 @@ import android.os.Process
 import androidx.annotation.CallSuper
 import com.alibaba.sdk.android.openaccount.ConfigManager
 import com.aliyun.alink.linksdk.alcs.coap.AlcsCoAP
+import com.aliyun.alink.linksdk.tools.ALog
+import com.aliyun.alink.linksdk.tools.ALog.LEVEL_ERROR
 import com.aliyun.alink.linksdk.tools.ThreadTools
 import com.aliyun.iot.aep.sdk.framework.AApplication
 import com.fenda.iot.third.utils.SDKInitHelper
@@ -19,6 +21,7 @@ open class IotApplication : AApplication() {
     @CallSuper
     override fun onCreate() {
         super.onCreate()
+        ALog.setLevel(LEVEL_ERROR);
         initAliSDK(this)
         FlutterInjector.instance().flutterLoader().startInitialization(this)
     }

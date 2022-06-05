@@ -134,7 +134,7 @@ object DispatchNetAPI {
             override fun onProvisionPrepare(prepareType: Int) {
                 log("startAddDevice", "onProvisionPrepare->", "prepareType:$prepareType")
 
-                AddDeviceBiz.getInstance().toggleProvision("HUAWEI_B311_4CC5", "mtsihao8", 60)
+                AddDeviceBiz.getInstance().toggleProvision("Xiaomi_FF3F", "mtsihao7", 60)
                 /**
                  * 第三步：配网准备阶段，传入Wi-Fi信息
                  * TODO 修改使用手机当前连接的Wi-Fi的SSID和password
@@ -221,6 +221,8 @@ object DispatchNetAPI {
 
     /** 获取绑定token */
     fun getDeviceToken(context: Context, productKey: String, deviceName: String, resultCallback: MethodChannel.Result) {
+        log("getDeviceToken", "getDeviceToken->##############################")
+        log("getDeviceToken", "getDeviceToken->##############################")
         log("getDeviceToken", "getDeviceToken->", "----- 获取绑定的token -----")
         /**
          * 第一步：获取绑定token
