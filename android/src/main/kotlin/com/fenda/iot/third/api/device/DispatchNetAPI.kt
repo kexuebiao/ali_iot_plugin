@@ -158,7 +158,7 @@ object DispatchNetAPI {
                             }
                         }
 
-                        override fun error(errorCode: String?, errorMessage: String?, errorDetails: Any?) {
+                        override fun error(errorCode: String, errorMessage: String?, errorDetails: Any?) {
                             log("startAddDevice", "toggleProvision->", "error:$errorCode errorMessage:$errorMessage errorDetails:$errorDetails")
                         }
 

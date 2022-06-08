@@ -142,7 +142,7 @@ class DispatchNetAPI {
         AliIotPlugin.eventChannel.receiveBroadcastStream("startDiscovery")
             .listen((event) {
           if (event != null) {
-            print("$TAG : startDiscovery event: " + event.toString());
+            // print("$TAG : startDiscovery event: " + event.toString());
             if (event is Map<String, dynamic>) {
               var data = jsonDecode(event["data"]);
               callback(data["discoveryType"], data["deviceList"]);
@@ -158,7 +158,7 @@ class DispatchNetAPI {
     }
     try {
       if (_startDiscoverySubscription != null) {
-        _startDiscoverySubscription?.cancel();
+        _startDiscoverySubscription!.cancel();
         _startDiscoverySubscription = null;
       }
     } catch (e) {
@@ -368,12 +368,12 @@ class DevicePanelAPI {
     });
   }
 
-  static Future<String?> invokeDevicePanelService(String params) {
+  static Future<String?> invokeDevicePanelService(Map params) {
     if (AliIotPlugin.debug) {
       print("$TAG : invokeDevicePanelService $params");
     }
     return AliIotPlugin.methodChannel.invokeMethod('invokeDevicePanelService', {
-      "params": params,
+      "params": jsonEncode(params),
     });
   }
 
