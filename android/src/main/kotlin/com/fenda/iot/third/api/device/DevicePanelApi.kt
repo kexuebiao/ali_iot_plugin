@@ -53,7 +53,6 @@ class DevicePanelApi(val context: Context, val iotId: String, val panelDevice: P
      * 获取设备属性
      */
     fun getProperties(result: MethodChannel.Result? = null) {
-        log("DevicePanelApi", "getProperties")
         panelDevice.getProperties(IPanelCallback { bSuc: Boolean, o: Any? ->
             ApiTools.handler.post {
                 if (bSuc) {

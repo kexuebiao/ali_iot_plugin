@@ -2,6 +2,7 @@ package com.fenda.iot.third.api
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.aliyun.iot.aep.sdk.apiclient.IoTAPIClientFactory
 import com.aliyun.iot.aep.sdk.apiclient.callback.IoTCallback
 import com.aliyun.iot.aep.sdk.apiclient.callback.IoTResponse
@@ -17,7 +18,7 @@ import java.util.*
  */
 @Suppress("unused")
 object ApiTools {
-    val handler by lazyOf(Handler(Looper.myLooper()!!))
+    val handler by lazyOf(Handler(Looper.getMainLooper()))
 
     @Suppress("HasPlatformType")
     val apiClient = IoTAPIClientFactory().client

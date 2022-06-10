@@ -171,6 +171,7 @@ class DispatchNetAPI {
     if (AliIotPlugin.debug) {
       print("$TAG : listenGatewayPermit");
     }
+    _gatewayPermitSubscription?.cancel();
     _gatewayPermitSubscription =
         AliIotPlugin.eventChannel.receiveBroadcastStream("gatewayPermit")
             .listen((event) {
